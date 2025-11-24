@@ -13,7 +13,7 @@ if (argv.m === undefined) {
   argv.m = today.getMonth() + 1;
 }
 
-const first = new Date(argv.y, argv.m, 1);
+const first = new Date(argv.y, argv.m - 1, 1);
 const last = new Date(argv.y, argv.m, 0);
 const year = last.getFullYear();
 const month = new Intl.DateTimeFormat("en", { month: "long" }).format(last);
@@ -31,9 +31,9 @@ console.log(days);
 
 let wday = "   ".repeat(first_day);
 process.stdout.write(wday);
-for (let i = 1; i < last_date + 1; i++) {
+for (let i = 1; i <= last_date; i++) {
   process.stdout.write(`${(" " + i).slice(-2)} `);
-  const sample = new Date(argv.y, argv.m, i);
+  const sample = new Date(argv.y, argv.m - 1, i);
   const sample_day = sample.getDay();
   if (sample_day === 6) {
     console.log();
