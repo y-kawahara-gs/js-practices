@@ -16,14 +16,14 @@ if (argv.m === undefined) {
 const firstDate = new Date(argv.y, argv.m - 1, 1);
 const lastDate = new Date(argv.y, argv.m, 0);
 
-const days = "Su Mo Tu We Th Fr Sa";
+const dayOfWeek = "Su Mo Tu We Th Fr Sa";
 const headerText = `${new Intl.DateTimeFormat("en", { month: "long" }).format(lastDate)} ${lastDate.getFullYear()}`;
-const padding = Math.max(0, days.length - headerText.length);
+const padding = Math.max(0, dayOfWeek.length - headerText.length);
 const leftPadding = " ".repeat(Math.floor(padding / 2));
 const centeredHeader = leftPadding + headerText;
 
 console.log(centeredHeader);
-console.log(days);
+console.log(dayOfWeek);
 
 const startPaddingDays = "   ".repeat(firstDate.getDay());
 process.stdout.write(startPaddingDays);
