@@ -17,8 +17,6 @@ const firstDate = new Date(argv.y, argv.m - 1, 1);
 const lastDate = new Date(argv.y, argv.m, 0);
 const year = lastDate.getFullYear();
 const month = new Intl.DateTimeFormat("en", { month: "long" }).format(lastDate);
-const first_day = firstDate.getDay();
-const last_date = lastDate.getDate();
 
 const days = "Su Mo Tu We Th Fr Sa";
 const headerText = `${month} ${year}`;
@@ -29,13 +27,11 @@ const centeredHeader = leftPadding + headerText;
 console.log(centeredHeader);
 console.log(days);
 
-const startPaddingDays = "   ".repeat(first_day);
+const startPaddingDays = "   ".repeat(firstDate.getDay());
 process.stdout.write(startPaddingDays);
-for (let i = 1; i <= last_date; i++) {
-  process.stdout.write(`${(" " + i).slice(-2)} `);
-  const sample = new Date(argv.y, argv.m - 1, i);
-  const sample_day = sample.getDay();
-  if (sample_day === 6) {
+for (let date = firstDate; date <= lastDate; date.setDate(date.getDate() + 1)) {
+  process.stdout.write(`${(" " + date.getDate()).slice(-2)} `);
+  if (date.getDay() === 6) {
     console.log();
   }
 }
