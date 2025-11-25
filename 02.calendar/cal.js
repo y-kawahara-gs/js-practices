@@ -29,8 +29,8 @@ const centeredHeader = leftPadding + headerText;
 console.log(centeredHeader);
 console.log(days);
 
-let wday = "   ".repeat(first_day);
-process.stdout.write(wday);
+const startPaddingDays = "   ".repeat(first_day);
+process.stdout.write(startPaddingDays);
 for (let i = 1; i <= last_date; i++) {
   process.stdout.write(`${(" " + i).slice(-2)} `);
   const sample = new Date(argv.y, argv.m - 1, i);
