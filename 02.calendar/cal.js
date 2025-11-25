@@ -24,9 +24,9 @@ const days = "Su Mo Tu We Th Fr Sa";
 const headerText = `${month} ${year}`;
 const padding = Math.max(0, days.length - headerText.length);
 const leftPadding = " ".repeat(Math.floor(padding / 2));
-const centeredHedder = leftPadding + headerText;
+const centeredHeader = leftPadding + headerText;
 
-console.log(centeredHedder);
+console.log(centeredHeader);
 console.log(days);
 
 let wday = "   ".repeat(first_day);
