@@ -32,8 +32,11 @@ console.log(dayOfWeek);
 const startPaddingDays = "   ".repeat(firstDate.getDay());
 process.stdout.write(startPaddingDays);
 for (let date = firstDate; date <= lastDate; date.setDate(date.getDate() + 1)) {
-  process.stdout.write(`${(" " + date.getDate()).slice(-2)} `);
   if (date.getDay() === 6) {
-    console.log();
+    console.log(`${(" " + date.getDate()).slice(-2)}`);
+  } else if (date === lastDate.getDate()) {
+    process.stdout.write(`${(" " + date.getDate()).slice(-2)}`);
+  } else {
+    process.stdout.write(`${(" " + date.getDate()).slice(-2)} `);
   }
 }
