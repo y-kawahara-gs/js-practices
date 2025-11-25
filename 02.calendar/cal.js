@@ -15,11 +15,9 @@ if (argv.m === undefined) {
 
 const firstDate = new Date(argv.y, argv.m - 1, 1);
 const lastDate = new Date(argv.y, argv.m, 0);
-const year = lastDate.getFullYear();
-const month = new Intl.DateTimeFormat("en", { month: "long" }).format(lastDate);
 
 const days = "Su Mo Tu We Th Fr Sa";
-const headerText = `${month} ${year}`;
+const headerText = `${new Intl.DateTimeFormat("en", { month: "long" }).format(lastDate)} ${lastDate.getFullYear()}`;
 const padding = Math.max(0, days.length - headerText.length);
 const leftPadding = " ".repeat(Math.floor(padding / 2));
 const centeredHeader = leftPadding + headerText;
