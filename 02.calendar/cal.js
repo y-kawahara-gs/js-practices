@@ -13,12 +13,12 @@ if (argv.m === undefined) {
   argv.m = today.getMonth() + 1;
 }
 
-const first = new Date(argv.y, argv.m - 1, 1);
-const last = new Date(argv.y, argv.m, 0);
-const year = last.getFullYear();
-const month = new Intl.DateTimeFormat("en", { month: "long" }).format(last);
-const first_day = first.getDay();
-const last_date = last.getDate();
+const firstDate = new Date(argv.y, argv.m - 1, 1);
+const lastDate = new Date(argv.y, argv.m, 0);
+const year = lastDate.getFullYear();
+const month = new Intl.DateTimeFormat("en", { month: "long" }).format(lastDate);
+const first_day = firstDate.getDay();
+const last_date = lastDate.getDate();
 
 const days = "Su Mo Tu We Th Fr Sa";
 const headerText = `${month} ${year}`;
