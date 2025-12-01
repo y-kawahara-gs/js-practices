@@ -32,7 +32,7 @@ for (
   process.stdout.write(`${(" " + date.getDate()).slice(-2)}`);
   if (date.getDay() === 6) {
     console.log();
-  } else if (date !== lastDate.getDate()) {
+  } else if (date !== lastDate) {
     process.stdout.write(" ");
   }
 }
