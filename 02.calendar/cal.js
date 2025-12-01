@@ -29,11 +29,10 @@ for (
   date <= lastDate;
   date.setDate(date.getDate() + 1)
 ) {
+  process.stdout.write(`${(" " + date.getDate()).slice(-2)}`);
   if (date.getDay() === 6) {
-    console.log(`${(" " + date.getDate()).slice(-2)}`);
-  } else if (date === lastDate.getDate()) {
-    process.stdout.write(`${(" " + date.getDate()).slice(-2)}`);
-  } else {
-    process.stdout.write(`${(" " + date.getDate()).slice(-2)} `);
+    console.log();
+  } else if (date !== lastDate.getDate()) {
+    process.stdout.write(" ");
   }
 }
