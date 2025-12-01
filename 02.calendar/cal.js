@@ -24,7 +24,11 @@ console.log(dayOfWeek);
 
 const startPadding = "   ".repeat(firstDate.getDay());
 process.stdout.write(startPadding);
-for (let date = firstDate; date <= lastDate; date.setDate(date.getDate() + 1)) {
+for (
+  let date = new Date(year, month - 1, 1);
+  date <= lastDate;
+  date.setDate(date.getDate() + 1)
+) {
   if (date.getDay() === 6) {
     console.log(`${(" " + date.getDate()).slice(-2)}`);
   } else if (date === lastDate.getDate()) {
