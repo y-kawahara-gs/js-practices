@@ -22,8 +22,8 @@ const centeredHeader = leftPadding + headerText;
 console.log(centeredHeader);
 console.log(dayOfWeek);
 
-const startPaddingDays = "   ".repeat(firstDate.getDay());
-process.stdout.write(startPaddingDays);
+const startPadding = "   ".repeat(firstDate.getDay());
+process.stdout.write(startPadding);
 for (let date = firstDate; date <= lastDate; date.setDate(date.getDate() + 1)) {
   if (date.getDay() === 6) {
     console.log(`${(" " + date.getDate()).slice(-2)}`);
