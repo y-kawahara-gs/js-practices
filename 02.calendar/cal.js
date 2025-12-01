@@ -15,8 +15,8 @@ const dayOfWeek = "Su Mo Tu We Th Fr Sa";
 
 const englishFormat = new Intl.DateTimeFormat("en", { month: "long" });
 const headerText = `${englishFormat.format(lastDate)} ${lastDate.getFullYear()}`;
-const padding = Math.max(0, dayOfWeek.length - headerText.length);
-const leftPadding = " ".repeat(Math.floor(padding / 2));
+const lengthDifference = Math.max(0, dayOfWeek.length - headerText.length);
+const leftPadding = " ".repeat(Math.floor(lengthDifference / 2));
 const centeredHeader = leftPadding + headerText;
 
 console.log(centeredHeader);
