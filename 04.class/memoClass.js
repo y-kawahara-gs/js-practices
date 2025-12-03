@@ -31,7 +31,7 @@ export class Memo {
       console.error(error);
     }
   }
-  static async load_list() {
+  static async loadList() {
     try {
       const allMemos = Memo.#loadMemos();
       allMemos.forEach((memo) => {
@@ -41,7 +41,7 @@ export class Memo {
       console.error(error);
     }
   }
-  static async load_reference() {
+  static async loadReference() {
     try {
       const allMemos = Memo.#loadMemos();
       const choicesArray = allMemos.map((memo) => {

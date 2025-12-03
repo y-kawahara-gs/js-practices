@@ -10,10 +10,10 @@ export class SystemController {
     const action = await this.option.decide_process();
     switch (action) {
       case "list":
-        await Memo.load_list();
+        await Memo.loadList();
         break;
       case "reference":
-        await Memo.load_reference();
+        await Memo.loadReference();
         break;
       case "delete":
         await Memo.delete();
