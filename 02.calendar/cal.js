@@ -29,7 +29,7 @@ for (
   date <= lastDate;
   date.setDate(date.getDate() + 1)
 ) {
-  process.stdout.write(`${(" " + date.getDate()).slice(-2)}`);
+  process.stdout.write(` ${date.getDate()}`.slice(-2));
 
   if (date.getDate() !== lastDate.getDate()) {
     if (date.getDay() === 6) {
