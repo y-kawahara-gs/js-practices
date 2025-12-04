@@ -31,11 +31,9 @@ for (
 ) {
   process.stdout.write(` ${date.getDate()}`.slice(-2));
 
-  if (date.getDate() !== lastDate.getDate()) {
-    if (date.getDay() === 6) {
-      console.log();
-    } else {
-      process.stdout.write(" ");
-    }
+  if (date.getDay() === 6 || date.getDate() === lastDate.getDate()) {
+    console.log();
+  } else {
+    process.stdout.write(" ");
   }
 }
