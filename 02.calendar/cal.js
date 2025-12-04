@@ -13,8 +13,8 @@ const lastDate = new Date(year, month, 0);
 
 const dayOfWeek = "Su Mo Tu We Th Fr Sa";
 
-const englishFormat = new Intl.DateTimeFormat("en", { month: "long" });
-const headerText = `${englishFormat.format(lastDate)} ${lastDate.getFullYear()}`;
+const englishFormatter = new Intl.DateTimeFormat("en", { month: "long" });
+const headerText = `${englishFormatter.format(lastDate)} ${lastDate.getFullYear()}`;
 const lengthDifference = Math.max(0, dayOfWeek.length - headerText.length);
 const leftPadding = " ".repeat(Math.floor(lengthDifference / 2));
 const centeredHeader = leftPadding + headerText;
