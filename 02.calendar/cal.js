@@ -25,7 +25,7 @@ console.log(dayOfWeek);
 const startPadding = "   ".repeat(firstDate.getDay());
 process.stdout.write(startPadding);
 for (
-  let date = new Date(year, month - 1, 1);
+  let date = structuredClone(firstDate);
   date <= lastDate;
   date.setDate(date.getDate() + 1)
 ) {
