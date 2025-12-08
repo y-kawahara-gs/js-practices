@@ -34,16 +34,22 @@ export class Memo {
   static async loadList() {
     try {
       const allMemos = Memo.#loadMemos();
+      if (allMemos.length === 0) {
+        throw new Error("表示できるメモがありません。メモを作成してください。");
+      }
       allMemos.forEach((memo) => {
         console.log(memo.title);
       });
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   }
   static async loadReference() {
     try {
       const allMemos = Memo.#loadMemos();
+      if (allMemos.length === 0) {
+        throw new Error("表示できるメモがありません。メモを作成してください。");
+      }
       const choicesArray = allMemos.map((memo) => {
         return {
           name: memo.title,
@@ -65,12 +71,15 @@ export class Memo {
         .then((answer) => console.log(answer))
         .catch(console.error);
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   }
   static async delete() {
     try {
       const allMemos = Memo.#loadMemos();
+      if (allMemos.length === 0) {
+        throw new Error("削除できるメモがありません。");
+      }
       const choicesArray = allMemos.map((memo) => {
         return {
           name: memo.title,
@@ -89,7 +98,7 @@ export class Memo {
       const memo_data = JSON.stringify({ memos: memos }, null, 2);
       fs.writeFileSync(DATA_FILE, memo_data, "utf-8");
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   }
   static #loadMemos() {
