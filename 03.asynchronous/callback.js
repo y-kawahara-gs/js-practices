@@ -10,7 +10,7 @@ db.run(
       console.log(this.lastID);
       db.get(
         "SELECT * FROM books WHERE title = 'Railsの教科書'",
-        (error, book) => {
+        (_error, book) => {
           console.log(book);
         },
       );
