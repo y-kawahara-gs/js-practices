@@ -20,6 +20,7 @@ db.run(
 );
 
 await timers.setTimeout(100);
+
 db = new sqlite3.Database(":memory:");
 
 db.run(
