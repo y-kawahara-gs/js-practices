@@ -16,9 +16,9 @@ db.run(
           "Railsの教科書",
           (_error, book) => {
             console.log(book);
+            db.close();
           },
         );
-        db.close();
       },
     );
   },
@@ -44,10 +44,10 @@ db.run(
               console.error(error.message);
             } else {
               console.log(book);
+              db.close();
             }
           },
         );
-        db.close();
       });
     });
   },
