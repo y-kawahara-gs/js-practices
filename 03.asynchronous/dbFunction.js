@@ -11,7 +11,7 @@ export function dbRunPromise(db, sql, params) {
 
 export function dbGetPromise(db, sql, params) {
   return new Promise((resolve, reject) => {
-    db.get(sql, params, function (err, result) {
+    db.get(sql, params, (err, result) => {
       if (err) {
         reject(err);
       }
