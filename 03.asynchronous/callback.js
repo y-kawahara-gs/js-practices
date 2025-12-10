@@ -43,7 +43,7 @@ db.run(
             if (error.code === "SQLITE_ERROR") {
               console.error(error.message);
             } else {
-              console.log(book.message);
+              console.log(book);
             }
           },
         );
