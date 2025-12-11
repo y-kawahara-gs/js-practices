@@ -11,8 +11,8 @@ dbRunPromise(
   .then(() =>
     dbRunPromise(db, "INSERT INTO books (title) VALUES (?)", "Railsの教科書"),
   )
-  .then((id) => {
-    console.log(id.lastID);
+  .then((statementResult) => {
+    console.log(statementResult.lastID);
   })
   .catch((error) => {
     if (error.code === "SQLITE_CONSTRAINT") {
@@ -49,8 +49,8 @@ dbRunPromise(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => dbRunPromise(db, "INSERT INTO books (title) VALUES (?)", null))
-  .then((id) => {
-    console.log(id.lastID);
+  .then((statementResult) => {
+    console.log(statementResult.lastID);
   })
   .catch((error) => {
     if (error.code === "SQLITE_CONSTRAINT") {

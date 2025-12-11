@@ -15,12 +15,12 @@ async function successAsync(db) {
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     );
     try {
-      let book = await dbRunPromise(
+      const statementResult = await dbRunPromise(
         db,
         "INSERT INTO books (title) VALUES (?)",
         "Railsの教科書",
       );
-      console.log(book.lastID);
+      console.log(statementResult.lastID);
     } catch (error) {
       if (error.code === "SQLITE_CONSTRAINT") {
         console.error(error.message);
@@ -56,12 +56,12 @@ async function failureAsync(db) {
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     );
     try {
-      let book = await dbRunPromise(
+      const statementResult = await dbRunPromise(
         db,
         "INSERT INTO books (title) VALUES (?)",
         null,
       );
-      console.log(book.lastID);
+      console.log(statementResult.lastID);
     } catch (error) {
       if (error.code === "SQLITE_CONSTRAINT") {
         console.error(error.message);
