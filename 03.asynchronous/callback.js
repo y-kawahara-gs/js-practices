@@ -32,7 +32,7 @@ db.run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   () => {
     db.run("INSERT INTO books (title) VALUES (?)", null, (error) => {
-      if (error.code === "SQLITE_CONSTRAINT") {
+      if (error?.code === "SQLITE_CONSTRAINT") {
         console.error(error.message);
       }
       db.run("INSERT INTO books (title) VALUES (?)", "Railsの教科書", () => {
@@ -40,7 +40,7 @@ db.run(
           "SELECT * FROM book WHERE title = ?",
           "Railsの教科書",
           (error, book) => {
-            if (error.code === "SQLITE_ERROR") {
+            if (error?.code === "SQLITE_ERROR") {
               console.error(error.message);
             } else {
               console.log(book);
