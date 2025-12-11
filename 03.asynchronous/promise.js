@@ -20,11 +20,8 @@ dbRunPromise(
   .then((book) => {
     console.log(book);
   })
-  .finally(() =>
-    dbClosePromise(db)
-      .then(() => {})
-      .catch(() => {}),
-  );
+  .finally(() => dbClosePromise(db))
+  .catch((error) => console.error(error.message));
 
 await timers.setTimeout(100);
 
@@ -58,8 +55,5 @@ dbRunPromise(
       throw error;
     }
   })
-  .finally(() =>
-    dbClosePromise(db)
-      .then(() => {})
-      .catch(() => {}),
-  );
+  .finally(() => dbClosePromise(db))
+  .catch((error) => console.error(error.message));

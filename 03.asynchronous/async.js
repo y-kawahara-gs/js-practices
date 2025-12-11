@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-import { dbRunPromise, dbGetPromise } from "./dbFunction.js";
+import { dbRunPromise, dbGetPromise, dbClosePromise } from "./dbFunction.js";
 
 async function main() {
   let db = new sqlite3.Database(":memory:");
@@ -25,7 +25,11 @@ async function successAsync(db) {
     "Railsの教科書",
   );
   console.log(book);
-  db.close();
+  try {
+    await dbClosePromise(db);
+  } catch (closeError) {
+    console.error(closeError.message);
+  }
 }
 
 async function failureAsync(db) {
@@ -65,7 +69,11 @@ async function failureAsync(db) {
   } catch (error) {
     console.error(error.message);
   } finally {
-    db.close();
+    try {
+      await dbClosePromise(db);
+    } catch (closeError) {
+      console.error(closeError.message);
+    }
   }
 }
 
