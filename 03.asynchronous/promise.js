@@ -14,25 +14,11 @@ dbRunPromise(
   .then((statementResult) => {
     console.log(statementResult.lastID);
   })
-  .catch((error) => {
-    if (error.code === "SQLITE_CONSTRAINT") {
-      console.error(error.message);
-    } else {
-      throw error;
-    }
-  })
   .then(() =>
     dbGetPromise(db, "SELECT * FROM books WHERE title = ?", "Railsの教科書"),
   )
   .then((book) => {
     console.log(book);
-  })
-  .catch((error) => {
-    if (error.code === "SQLITE_ERROR") {
-      console.error(error.message);
-    } else {
-      throw error;
-    }
   })
   .finally(() =>
     dbClosePromise(db)
