@@ -17,24 +17,25 @@ export class SystemController {
         await Memo.loadList(DATA_FILE);
         break;
       case "reference": {
-        const prompt = new Select({
-          name: "show",
-          message: "Choose a note you want to see:",
-          choices: titleArray,
-          footer() {
-            const content = this.focused.name + "\n" + this.focused.content;
-            return content ? `${content}` : "";
-          },
-        });
+        const footer = function () {
+          const content = this.focused.name + "\n" + this.focused.content;
+          return content ? `${content}` : "";
+        };
+        const prompt = SystemController.#makePrompt(
+          "show",
+          "Choose a note you want to see:",
+          titleArray,
+          footer,
+        );
         await Memo.loadReference(DATA_FILE, prompt);
         break;
       }
       case "delete": {
-        const prompt = new Select({
-          name: "delete",
-          message: "Choose a note you want to delete:",
-          choices: titleArray,
-        });
+        const prompt = SystemController.#makePrompt(
+          "delete",
+          "Choose a note you want to delete:",
+          titleArray,
+        );
         await Memo.delete(DATA_FILE, prompt);
         break;
       }
@@ -59,5 +60,13 @@ export class SystemController {
         break;
       }
     }
+  }
+  static #makePrompt(name, message, titleArray, footer) {
+    return new Select({
+      name: name,
+      message: message,
+      choices: titleArray,
+      footer,
+    });
   }
 }

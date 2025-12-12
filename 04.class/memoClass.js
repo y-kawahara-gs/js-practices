@@ -13,7 +13,6 @@ export class Memo {
       const lastMemo = memos[memos.length - 1];
       newId = lastMemo.id + 1;
     }
-
     const newMemoData = {
       id: newId,
       title: this.title,
@@ -87,7 +86,6 @@ export class Memo {
       }
     }
   }
-
   static #loadMemos(DATA_FILE) {
     let memos = [];
     if (fs.existsSync(DATA_FILE)) {
