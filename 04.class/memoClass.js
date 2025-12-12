@@ -1,16 +1,12 @@
-import pkg from "enquirer";
 import fs from "node:fs";
-
-const { Select } = pkg;
-const DATA_FILE = "memos.json";
 
 export class Memo {
   constructor(title, content) {
     this.title = title;
     this.content = content;
   }
-  save() {
-    let memos = Memo.#loadMemos();
+  save(DATA_FILE) {
+    let memos = Memo.#loadMemos(DATA_FILE);
 
     let newId = 1;
     if (memos.length > 0) {
@@ -31,9 +27,9 @@ export class Memo {
       console.error(error);
     }
   }
-  static async loadList() {
+  static async loadList(DATA_FILE) {
     try {
-      const allMemos = Memo.#loadMemos();
+      const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
         throw new Error("表示できるメモがありません。メモを作成してください。");
       }
@@ -44,28 +40,12 @@ export class Memo {
       console.error(error.message);
     }
   }
-  static async loadReference() {
+  static async loadReference(DATA_FILE, prompt) {
     try {
-      const allMemos = Memo.#loadMemos();
+      const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
         throw new Error("表示できるメモがありません。メモを作成してください。");
       }
-      const choicesArray = allMemos.map((memo) => {
-        return {
-          name: memo.title,
-          content: memo.content,
-        };
-      });
-      const prompt = new Select({
-        type: "select",
-        name: "show",
-        message: "Choose a note you want to see:",
-        choices: choicesArray,
-        footer() {
-          const content = this.focused.name + "\n" + this.focused.content;
-          return content ? `${content}` : "";
-        },
-      });
       prompt
         .run()
         .then((answer) => console.log(answer))
@@ -74,24 +54,12 @@ export class Memo {
       console.error(error.message);
     }
   }
-  static async delete() {
+  static async delete(DATA_FILE, prompt) {
     try {
-      const allMemos = Memo.#loadMemos();
+      const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
         throw new Error("削除できるメモがありません。");
       }
-      const choicesArray = allMemos.map((memo) => {
-        return {
-          name: memo.title,
-          content: memo.content,
-        };
-      });
-      const prompt = new Select({
-        type: "select",
-        name: "delete",
-        message: "Choose a note you want to delete:",
-        choices: choicesArray,
-      });
       const selectTitle = await prompt.run();
       const memoToDelete = allMemos.find((memo) => memo.title === selectTitle);
       let memos = allMemos.filter((memo) => memo.id !== memoToDelete.id);
@@ -101,7 +69,26 @@ export class Memo {
       console.error(error.message);
     }
   }
-  static #loadMemos() {
+  static async getTitleArray(DATA_FILE) {
+    try {
+      const allMemos = Memo.#loadMemos(DATA_FILE);
+      const choicesArray = allMemos.map((memo) => {
+        return {
+          name: memo.title,
+          content: memo.content,
+        };
+      });
+      return choicesArray;
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+        throw new Error("構文エラーです");
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  static #loadMemos(DATA_FILE) {
     let memos = [];
     if (fs.existsSync(DATA_FILE)) {
       try {
