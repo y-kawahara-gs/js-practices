@@ -1,8 +1,8 @@
-import { OptionParser } from "./optionparser.js";
 import readline from "node:readline";
-import { Memo } from "./memoClass.js";
 import pkg from "enquirer";
 const { Select } = pkg;
+import { OptionParser } from "./optionparser.js";
+import { Memo } from "./memoClass.js";
 
 export class SystemController {
   constructor() {
