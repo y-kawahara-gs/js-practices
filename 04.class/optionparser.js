@@ -4,7 +4,7 @@ export class OptionParser {
   constructor() {
     this.option = minimist(process.argv.slice(2));
   }
-  async decide_process() {
+  decide_process() {
     if (this.option.l) {
       return "list";
     } else if (this.option.r) {

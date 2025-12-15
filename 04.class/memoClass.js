@@ -26,7 +26,7 @@ export class Memo {
       console.error(error);
     }
   }
-  static async loadList(DATA_FILE) {
+  static loadList(DATA_FILE) {
     try {
       const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
@@ -45,7 +45,7 @@ export class Memo {
       if (allMemos.length === 0) {
         throw new Error("表示できるメモがありません。メモを作成してください。");
       }
-      callback();
+      await callback();
     } catch (error) {
       console.error(error.message);
     }
@@ -65,7 +65,7 @@ export class Memo {
       console.error(error.message);
     }
   }
-  static async getTitleArray(DATA_FILE) {
+  static getTitleArray(DATA_FILE) {
     try {
       const allMemos = Memo.#loadMemos(DATA_FILE);
       const choicesArray = allMemos.map((memo) => {
