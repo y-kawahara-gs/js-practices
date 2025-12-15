@@ -39,27 +39,24 @@ export class Memo {
       console.error(error.message);
     }
   }
-  static async loadReference(DATA_FILE, prompt) {
+  static async loadReference(DATA_FILE, callback) {
     try {
       const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
         throw new Error("表示できるメモがありません。メモを作成してください。");
       }
-      prompt
-        .run()
-        .then((answer) => console.log(answer))
-        .catch(console.error);
+      callback();
     } catch (error) {
       console.error(error.message);
     }
   }
-  static async delete(DATA_FILE, prompt) {
+  static async delete(DATA_FILE, callback) {
     try {
       const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
         throw new Error("削除できるメモがありません。");
       }
-      const selectTitle = await prompt.run();
+      const selectTitle = await callback();
       const memoToDelete = allMemos.find((memo) => memo.title === selectTitle);
       let memos = allMemos.filter((memo) => memo.id !== memoToDelete.id);
       const memo_data = JSON.stringify({ memos: memos }, null, 2);

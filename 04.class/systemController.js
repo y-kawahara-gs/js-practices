@@ -21,22 +21,34 @@ export class SystemController {
           const content = this.focused.name + "\n" + this.focused.content;
           return content ? `${content}` : "";
         };
-        const prompt = SystemController.#makePrompt(
+        const prompt = await SystemController.makePrompt(
           "show",
           "Choose a note you want to see:",
           titleArray,
           footer,
         );
-        await Memo.loadReference(DATA_FILE, prompt);
+        const print = () => {
+          prompt
+            .run()
+            .then((target_string) => {
+              console.log(target_string);
+            })
+            .catch(console.error);
+        };
+
+        await Memo.loadReference(DATA_FILE, print);
         break;
       }
       case "delete": {
-        const prompt = SystemController.#makePrompt(
+        const prompt = await SystemController.makePrompt(
           "delete",
           "Choose a note you want to delete:",
           titleArray,
         );
-        await Memo.delete(DATA_FILE, prompt);
+        const getSelection = () => {
+          return prompt.run();
+        };
+        await Memo.delete(DATA_FILE, getSelection);
         break;
       }
       case "non-option": {
@@ -61,7 +73,7 @@ export class SystemController {
       }
     }
   }
-  static #makePrompt(name, message, titleArray, footer) {
+  static makePrompt(name, message, titleArray, footer) {
     return new Select({
       name: name,
       message: message,
