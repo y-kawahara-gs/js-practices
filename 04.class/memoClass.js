@@ -39,41 +39,43 @@ export class Memo {
       console.error(error.message);
     }
   }
-  static async loadReference(DATA_FILE, printTitle) {
+  static async loadReference(DATA_FILE, printMemo) {
     try {
       const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
         throw new Error("表示できるメモがありません。メモを作成してください。");
       }
-      const titleArray = await Memo.#getTitleArray(DATA_FILE)
-      await printTitle(titleArray);
+      const memoArray = await Memo.#getMemoArray(DATA_FILE);
+      await printMemo(memoArray);
     } catch (error) {
       console.error(error.message);
     }
   }
-  static async delete(DATA_FILE, printTitle) {
+  static async delete(DATA_FILE, selectId) {
     try {
       const allMemos = Memo.#loadMemos(DATA_FILE);
       if (allMemos.length === 0) {
         throw new Error("削除できるメモがありません。");
       }
-      const titleArray = await Memo.#getTitleArray(DATA_FILE)
-      const title = await printTitle(titleArray);
-      const memoToDelete = allMemos.find((memo) => memo.title === title);
-      let memos = allMemos.filter((memo) => memo.id !== memoToDelete.id);
+      const memoArray = await Memo.#getMemoArray(DATA_FILE);
+      const deleteid = await selectId(memoArray);
+      let memos = allMemos.filter((memo) => memo.id !== deleteid);
       const memo_data = JSON.stringify({ memos: memos }, null, 2);
       fs.writeFileSync(DATA_FILE, memo_data, "utf-8");
     } catch (error) {
       console.error(error.message);
     }
   }
-  static #getTitleArray(DATA_FILE) {
+  static #getMemoArray(DATA_FILE) {
     try {
       const allMemos = Memo.#loadMemos(DATA_FILE);
       const choicesArray = allMemos.map((memo) => {
         return {
-          title: memo.title,
-          content: memo.content,
+          name: memo.title,
+          value: {
+            id: memo.id,
+            content: memo.content,
+          },
         };
       });
       return choicesArray;

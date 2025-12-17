@@ -16,39 +16,44 @@ export class SystemController {
         await Memo.loadList(DATA_FILE);
         break;
       case "reference": {
-        const footer = function () {
-          const content = this.focused.name + "\n" + this.focused.content;
+        const fullText = function () {
+          const content = this.focused.name + "\n" + this.focused.value.content;
           return content ? `${content}` : "";
         };
 
-        const printTitle = async (titleArray) => {
+        const printMemo = async (memoArray) => {
           const prompt = await SystemController.makePrompt(
             "show",
             "Choose a note you want to see:",
-            titleArray,
-            footer,
+            memoArray,
+            fullText,
           );
-          prompt
+          await prompt
             .run()
-            .then((target_string) => {
-              console.log(target_string);
+            .then((selectMemo) => {
+              console.log(selectMemo);
             })
             .catch(console.error);
         };
 
-        await Memo.loadReference(DATA_FILE, printTitle);
+        await Memo.loadReference(DATA_FILE, printMemo);
         break;
       }
       case "delete": {
-        const printTitle = async (titleArray) => {
+        const selectId = async (memoArray) => {
           const prompt = await SystemController.makePrompt(
             "delete",
             "Choose a note you want to delete:",
-            titleArray,
+            memoArray,
           );
-          return prompt.run();
+          return await prompt
+            .run()
+            .then(() => {
+              return prompt.focused.value.id;
+            })
+            .catch(console.error);
         };
-        await Memo.delete(DATA_FILE, printTitle);
+        await Memo.delete(DATA_FILE, selectId);
         break;
       }
       case "non-option": {
@@ -73,11 +78,11 @@ export class SystemController {
       }
     }
   }
-  static makePrompt(name, message, titleArray, footer) {
+  static makePrompt(name, message, memoArray, footer) {
     return new Select({
       name: name,
       message: message,
-      choices: titleArray,
+      choices: memoArray,
       footer,
     });
   }
