@@ -11,7 +11,6 @@ export class SystemController {
   async run() {
     const action = await this.option.decide_process();
     const DATA_FILE = "memos.json";
-    const titleArray = await Memo.getTitleArray(DATA_FILE);
     switch (action) {
       case "list":
         await Memo.loadList(DATA_FILE);
@@ -21,13 +20,14 @@ export class SystemController {
           const content = this.focused.name + "\n" + this.focused.content;
           return content ? `${content}` : "";
         };
-        const prompt = await SystemController.makePrompt(
-          "show",
-          "Choose a note you want to see:",
-          titleArray,
-          footer,
-        );
-        const print = () => {
+
+        const printTitle = async (titleArray) => {
+          const prompt = await SystemController.makePrompt(
+            "show",
+            "Choose a note you want to see:",
+            titleArray,
+            footer,
+          );
           prompt
             .run()
             .then((target_string) => {
@@ -36,19 +36,19 @@ export class SystemController {
             .catch(console.error);
         };
 
-        await Memo.loadReference(DATA_FILE, print);
+        await Memo.loadReference(DATA_FILE, printTitle);
         break;
       }
       case "delete": {
-        const prompt = await SystemController.makePrompt(
-          "delete",
-          "Choose a note you want to delete:",
-          titleArray,
-        );
-        const getSelection = () => {
+        const printTitle = async (titleArray) => {
+          const prompt = await SystemController.makePrompt(
+            "delete",
+            "Choose a note you want to delete:",
+            titleArray,
+          );
           return prompt.run();
         };
-        await Memo.delete(DATA_FILE, getSelection);
+        await Memo.delete(DATA_FILE, printTitle);
         break;
       }
       case "non-option": {
