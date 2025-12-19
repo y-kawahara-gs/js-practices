@@ -28,12 +28,7 @@ export class SystemController {
             memoArray,
             showMemoContent,
           );
-          await prompt
-            .run()
-            .then((selectMemo) => {
-              console.log(selectMemo);
-            })
-            .catch(console.error);
+          await prompt.run();
         };
 
         await Memo.loadReference(DATA_FILE, printMemo);
@@ -46,12 +41,8 @@ export class SystemController {
             "Choose a note you want to delete:",
             memoArray,
           );
-          return await prompt
-            .run()
-            .then(() => {
-              return prompt.focused.value.id;
-            })
-            .catch(console.error);
+          await prompt.run();
+          return prompt.focused.value.id;
         };
         await Memo.delete(DATA_FILE, selectId);
         break;
