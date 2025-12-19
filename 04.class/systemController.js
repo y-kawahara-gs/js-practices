@@ -16,9 +16,9 @@ export class SystemController {
         await Memo.loadList(DATA_FILE);
         break;
       case "reference": {
-        const fullText = function () {
-          const content = this.focused.name + "\n" + this.focused.value.content;
-          return content ? `${content}` : "";
+        const showMemoContent = function () {
+          const MemoContent = this.focused.name + "\n" + this.focused.value.content;
+          return MemoContent ? `${MemoContent}` : "";
         };
 
         const printMemo = async (memoArray) => {
@@ -26,7 +26,7 @@ export class SystemController {
             "show",
             "Choose a note you want to see:",
             memoArray,
-            fullText,
+            showMemoContent,
           );
           await prompt
             .run()
@@ -78,12 +78,12 @@ export class SystemController {
       }
     }
   }
-  static makePrompt(name, message, memoArray, footer) {
+  static makePrompt(name, message, memoArray, showContent) {
     return new Select({
       name: name,
       message: message,
       choices: memoArray,
-      footer,
+      footer: showContent,
     });
   }
 }
