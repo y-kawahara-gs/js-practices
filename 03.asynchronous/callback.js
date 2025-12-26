@@ -44,8 +44,12 @@ db.run(
               console.error(error.message);
             } else {
               console.log(book);
-              db.close();
             }
+            db.close((error) => {
+              if (error) {
+                console.error(error.message);
+              }
+            });
           },
         );
       });
