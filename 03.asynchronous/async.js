@@ -3,23 +3,26 @@ import { dbRunPromise, dbGetPromise, dbClosePromise } from "./dbFunction.js";
 
 let db = new sqlite3.Database(":memory:");
 
-await dbRunPromise(
-  db,
-  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
-);
-let statementResult = await dbRunPromise(
-  db,
-  "INSERT INTO books (title) VALUES (?)",
-  "Railsの教科書",
-);
-console.log(statementResult.lastID);
-let book = await dbGetPromise(
-  db,
-  "SELECT * FROM books WHERE title = ?",
-  "Railsの教科書",
-);
-console.log(book);
-await dbClosePromise(db);
+try {
+  await dbRunPromise(
+    db,
+    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
+  );
+  let statementResult = await dbRunPromise(
+    db,
+    "INSERT INTO books (title) VALUES (?)",
+    "Railsの教科書",
+  );
+  console.log(statementResult.lastID);
+  let book = await dbGetPromise(
+    db,
+    "SELECT * FROM books WHERE title = ?",
+    "Railsの教科書",
+  );
+  console.log(book);
+} finally {
+  await dbClosePromise(db);
+}
 
 db = new sqlite3.Database(":memory:");
 
