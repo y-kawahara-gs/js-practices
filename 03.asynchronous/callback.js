@@ -45,11 +45,7 @@ db.run(
             } else {
               console.log(book);
             }
-            db.close((error) => {
-              if (error) {
-                console.error(error.message);
-              }
-            });
+            db.close();
           },
         );
       });

@@ -19,11 +19,7 @@ let book = await dbGetPromise(
   "Railsの教科書",
 );
 console.log(book);
-try {
-  await dbClosePromise(db);
-} catch (closeError) {
-  console.error(closeError.message);
-}
+await dbClosePromise(db);
 
 db = new sqlite3.Database(":memory:");
 
@@ -63,9 +59,5 @@ try {
 } catch (error) {
   console.error(error.message);
 } finally {
-  try {
-    await dbClosePromise(db);
-  } catch (closeError) {
-    console.error(closeError.message);
-  }
+  await dbClosePromise(db);
 }
