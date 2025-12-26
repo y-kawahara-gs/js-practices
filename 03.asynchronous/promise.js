@@ -13,10 +13,12 @@ dbRunPromise(
   )
   .then((statementResult) => {
     console.log(statementResult.lastID);
+    return dbGetPromise(
+      db,
+      "SELECT * FROM books WHERE title = ?",
+      "Railsの教科書",
+    );
   })
-  .then(() =>
-    dbGetPromise(db, "SELECT * FROM books WHERE title = ?", "Railsの教科書"),
-  )
   .then((book) => {
     console.log(book);
   })
