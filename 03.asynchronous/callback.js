@@ -39,11 +39,9 @@ db.run(
         db.get(
           "SELECT * FROM book WHERE title = ?",
           "Railsの教科書",
-          (error, book) => {
+          (error) => {
             if (error instanceof Error && error?.code === "SQLITE_ERROR") {
               console.error(error.message);
-            } else {
-              console.log(book);
             }
             db.close();
           },
