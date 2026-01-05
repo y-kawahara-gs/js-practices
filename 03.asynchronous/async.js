@@ -21,6 +21,7 @@ try {
   );
   console.log(book);
 } finally {
+  await dbRunPromise(db, "DROP TABLE books");
   await dbClosePromise(db);
 }
 
@@ -62,5 +63,6 @@ try {
 } catch (error) {
   console.error(error.message);
 } finally {
+  await dbRunPromise(db, "DROP TABLE books");
   await dbClosePromise(db);
 }
