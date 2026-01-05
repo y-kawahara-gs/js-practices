@@ -60,8 +60,6 @@ try {
       throw error;
     }
   }
-} catch (error) {
-  console.error(error.message);
 } finally {
   await dbRunPromise(db, "DROP TABLE books");
   await dbClosePromise(db);
