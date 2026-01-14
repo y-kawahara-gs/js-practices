@@ -3,64 +3,58 @@ import { dbRunPromise, dbGetPromise, dbClosePromise } from "./dbFunction.js";
 
 let db = new sqlite3.Database(":memory:");
 
-try {
-  await dbRunPromise(
-    db,
-    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
-  );
-  const statementResult = await dbRunPromise(
-    db,
-    "INSERT INTO books (title) VALUES (?)",
-    "Railsの教科書",
-  );
-  console.log(statementResult.lastID);
-  const book = await dbGetPromise(
-    db,
-    "SELECT * FROM books WHERE title = ?",
-    "Railsの教科書",
-  );
-  console.log(book);
-} finally {
-  await dbRunPromise(db, "DROP TABLE books");
-  await dbClosePromise(db);
-}
+await dbRunPromise(
+  db,
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
+);
+const statementResult = await dbRunPromise(
+  db,
+  "INSERT INTO books (title) VALUES (?)",
+  "Railsの教科書",
+);
+console.log(statementResult.lastID);
+const book = await dbGetPromise(
+  db,
+  "SELECT * FROM books WHERE title = ?",
+  "Railsの教科書",
+);
+console.log(book);
+await dbRunPromise(db, "DROP TABLE books");
+await dbClosePromise(db);
 
 db = new sqlite3.Database(":memory:");
 
+await dbRunPromise(
+  db,
+  "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
+);
 try {
-  await dbRunPromise(
+  const statementResult = await dbRunPromise(
     db,
-    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
+    "INSERT INTO books (title) VALUES (?)",
+    null,
   );
-  try {
-    const statementResult = await dbRunPromise(
-      db,
-      "INSERT INTO books (title) VALUES (?)",
-      null,
-    );
-    console.log(statementResult.lastID);
-  } catch (error) {
-    if (error instanceof Error && error?.code === "SQLITE_CONSTRAINT") {
-      console.error(error.message);
-    } else {
-      throw error;
-    }
+  console.log(statementResult.lastID);
+} catch (error) {
+  if (error instanceof Error && error?.code === "SQLITE_CONSTRAINT") {
+    console.error(error.message);
+  } else {
+    throw error;
   }
-  try {
-    const book = await dbGetPromise(
-      db,
-      "SELECT * FROM book WHERE title = ?",
-      "Railsの教科書",
-    );
-    console.log(book);
-  } catch (error) {
-    if (error instanceof Error && error?.code === "SQLITE_ERROR") {
-      console.error(error.message);
-    } else {
-      throw error;
-    }
-  }
-} finally {
-  await dbRunPromise(db, "DROP TABLE books");
-  await dbClosePromise(db);
 }
+try {
+  const book = await dbGetPromise(
+    db,
+    "SELECT * FROM book WHERE title = ?",
+    "Railsの教科書",
+  );
+  console.log(book);
+} catch (error) {
+  if (error instanceof Error && error?.code === "SQLITE_ERROR") {
+    console.error(error.message);
+  } else {
+    throw error;
+  }
+}
+await dbRunPromise(db, "DROP TABLE books");
+await dbClosePromise(db);
