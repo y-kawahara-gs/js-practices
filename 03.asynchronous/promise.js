@@ -21,8 +21,8 @@ dbRunPromise(
   })
   .then((book) => {
     console.log(book);
+    return dbRunPromise(db, "DROP TABLE books");
   })
-  .then(() => dbRunPromise(db, "DROP TABLE books"))
   .then(() => {
     dbClosePromise(db);
   });
