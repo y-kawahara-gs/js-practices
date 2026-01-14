@@ -16,7 +16,9 @@ db.run(
           "Railsの教科書",
           (_error, book) => {
             console.log(book);
-            db.run("DROP TABLE books", () => db.close());
+            db.run("DROP TABLE books", () => {
+              db.close();
+            });
           },
         );
       },
@@ -43,7 +45,9 @@ db.run(
             if (error instanceof Error && error?.code === "SQLITE_ERROR") {
               console.error(error.message);
             }
-            db.run("DROP TABLE books", () => db.close());
+            db.run("DROP TABLE books", () => {
+              db.close();
+            });
           },
         );
       });
