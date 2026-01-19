@@ -23,9 +23,7 @@ dbRunPromise(
     console.log(book);
     return dbRunPromise(db, "DROP TABLE books");
   })
-  .then(() => {
-    dbClosePromise(db);
-  });
+  .then(() => dbClosePromise(db));
 
 await timers.setTimeout(100);
 
@@ -60,6 +58,4 @@ dbRunPromise(
     }
   })
   .then(() => dbRunPromise(db, "DROP TABLE books"))
-  .then(() => {
-    dbClosePromise(db);
-  });
+  .then(() => dbClosePromise(db));
